@@ -286,3 +286,7 @@ function finishJob() {
   document.getElementById("finishTime").textContent = formattedTime;
   sendNotification(`Job finished at ${formattedTime}`);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Modal Loaded:", document.getElementById("jobModal").innerHTML);
+});

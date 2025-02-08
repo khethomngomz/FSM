@@ -92,6 +92,14 @@ body {
   margin-top: 5px;
 }
 
+#startTime {
+  color: #0d8d12;
+}
+
+#finishTime{
+  color: #e2391b;  e2391b
+}
+
 /* Default styles (for larger screens) */
 .sidebar {
   width: 250px;
@@ -267,4 +275,12 @@ canvas {
 .footer a:hover {
   color: #85acf3 !important;
   text-decoration: underline;
+}
+
+.modal-body {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #000 !important; /* Ensure text isn't blending into the background */
+  background-color: #adafb0; /* Light gray */
 }
