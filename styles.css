@@ -113,3 +113,31 @@ body {
   color: #ccc;
   margin-top: 5px;
 }
+
+/* Mobile-first styles (default) */
+.sidebar {
+  width: 100%;
+}
+
+.content {
+  padding: 10px;
+}
+
+/* Adjustments for tablets & desktops */
+@media (min-width: 768px) {
+  .sidebar {
+    width: 250px;
+  }
+  .content {
+    margin-left: 260px;
+  }
+}
+
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 1 100%; /* Cards take full width on small screens */
+}
