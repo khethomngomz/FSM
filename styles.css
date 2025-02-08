@@ -114,30 +114,27 @@ body {
   margin-top: 5px;
 }
 
-/* Mobile-first styles (default) */
+/* Default styles (for larger screens) */
 .sidebar {
-  width: 100%;
+  width: 250px;
 }
 
 .content {
-  padding: 10px;
+  margin-left: 260px;
 }
 
-/* Adjustments for tablets & desktops */
-@media (min-width: 768px) {
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
   .sidebar {
-    width: 250px;
+    width: 100%; /* Full width on small screens */
   }
+
   .content {
-    margin-left: 260px;
+    margin-left: 0; /* Remove margin */
+    padding: 10px;
   }
-}
 
-.dashboard-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.card {
-  flex: 1 1 100%; /* Cards take full width on small screens */
+  .card {
+    width: 100%; /* Ensure job status cards take full width */
+  }
 }
