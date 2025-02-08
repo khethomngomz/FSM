@@ -17,19 +17,21 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav  me-auto">
           <li class="nav-item"><a class="nav-link" href="jobs.html">Jobs</a></li>
           <li class="nav-item"><a class="nav-link" href="checkin.html">Check-In/Out</a></li>
           <li class="nav-item"><a class="nav-link" href="inventory.html">Inventory</a></li>
           <li class="nav-item"><a class="nav-link" href="reports.html">Reports</a></li>
           <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
         </ul>
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+
       </div>
     </div>
   </nav>
 
   <!-- Main Content -->
-        <div class="container mt-5 pt-5">
+           <div class="container mt-5 pt-5">
 
     <h1>Dashboard</h1>
 
@@ -39,13 +41,10 @@
         <button class="btn btn-primary w-100" onclick="createJob()">Create New Job</button>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-success w-100" onclick="checkInventory()">Check Inventory</button>
+        <button class="btn btn-primary w-100" onclick="checkInventory()">Check Inventory</button>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-warning w-100" onclick="viewReports()">View Reports</button>
-      </div>
-      <div class="col-md-3">
-        <button class="btn btn-danger w-100" onclick="logout()">Logout</button>
+        <button class="btn btn-primary w-100" onclick="viewReports()">View Reports</button>
       </div>
     </div>
 

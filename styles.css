@@ -224,3 +224,30 @@ canvas {
 .card {
   width: 100%;
 }
+
+.btn-success .w-100 {
+  background: linear-gradient(to right, #00a6ff, #0077ff);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+
+.btn-danger {
+  background: linear-gradient(to right, #ab4c34, #f04c4c);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-success {
+  background: linear-gradient(to right, #4caf50, #008000);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+}
