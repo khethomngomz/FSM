@@ -111,10 +111,10 @@
       <div class="card-body">
         <h5 class="card-title">Recent Activity</h5>
         <ul class="list-group">
-          <li class="list-group-item">Job #123 completed by John Doe</li>
-          <li class="list-group-item">Job #124 started by Jane Smith</li>
-          <li class="list-group-item">Inventory item "Drill" checked out by John Doe</li>
-          <li class="list-group-item">Job #125 assigned to Jane Smith</li>
+          <li class="list-group-item">Job #123 completed by Installation Team</li>
+          <li class="list-group-item">Job #124 started by Installation Team</li>
+          <li class="list-group-item">Inventory item "Drill" checked out by Uninstall Team</li>
+          <li class="list-group-item">Job #125 assigned to Uninstall Team</li>
         </ul>
       </div>
     </div>
@@ -138,7 +138,7 @@
     const technicianPerformanceChart = new Chart(document.getElementById('technicianPerformanceChart'), {
       type: 'pie',
       data: {
-        labels: ['John Doe', 'Jane Smith'],
+        labels: ['Installation Team', 'Uninstall Team'],
         datasets: [{
           label: 'Performance',
           data: [8, 12],
