@@ -1,19 +1,18 @@
 {
-  "name": "backend",
+  "name": "your-app-name",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "build": "echo 'no build script defined'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
+    "express": "^4.17.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "firebase-admin": "^13.1.0"
+    "firebase-admin": "^9.8.0",
+    "dotenv": "^8.2.0"
   }
 }
