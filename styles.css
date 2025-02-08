@@ -6,40 +6,18 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: flex-start; /* Center horizontally and allow the content to take more space */
+  align-items: flex-start; /* Align content to the top, but maintain spacing from the top */
+  flex-direction: column;
+  padding-top: 50px; /* Adds spacing to the top for the navbar */
 }
 
-/* Navbar with Vertical Buttons */
-.navbar-vertical {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 200px;
-  background: linear-gradient(to bottom, #00a6ff, #0077ff);
-  padding: 20px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-vertical .nav-item {
-  margin-bottom: 15px;
-}
-
-.navbar-vertical .nav-link {
-  color: #fff;
-  font-size: 1.1em;
-  padding: 10px;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-.navbar-vertical .nav-link:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Main Content */
 .main-content {
-  margin-left: 220px; /* Offset for navbar */
+  width: 100%; /* Full width of the viewport */
+  max-width: 800px; /* Maximum width for the content */
   padding: 20px;
+  box-sizing: border-box; /* Include padding in the width */
 }
 
 /* Cards */
@@ -89,8 +67,8 @@ body {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(244, 235, 235, 0.1);
+  color: black;
   margin-bottom: 10px;
 }
 
@@ -110,7 +88,7 @@ body {
 /* Timestamps */
 .timestamp {
   font-size: 0.9em;
-  color: #ccc;
+  color: black;
   margin-top: 5px;
 }
 
@@ -137,4 +115,24 @@ body {
   .card {
     width: 100%; /* Ensure job status cards take full width */
   }
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #081b29;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.footer a {
+  color: #00a6ff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
