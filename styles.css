@@ -136,3 +136,76 @@ body {
 .footer a:hover {
   text-decoration: underline;
 }
+
+/* Navbar */
+.navbar-vertical {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 200px;
+  background: linear-gradient(to bottom, #00a6ff, #0077ff);
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-vertical .nav-item {
+  margin-bottom: 15px;
+}
+
+.navbar-vertical .nav-link {
+  color: #fff;
+  font-size: 1.1em;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.navbar-vertical .nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 220px; /* Offset for navbar */
+  padding: 20px;
+}
+
+/* Cards */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(to right, #00a6ff, #0077ff);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #0077ff, #00a6ff);
+}
+
+/* List Group */
+.list-group-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+/* Charts */
+canvas {
+  max-width: 100%;
+  height: auto;
+}

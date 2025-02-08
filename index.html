@@ -5,98 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - FSM App</title>
   <link rel="stylesheet" href="bootstrap.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
-  <script src="socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">FSM App</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="jobs.html">Jobs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="checkin.html">Check-In/Out</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="inventory.html">Inventory</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reports.html">Reports</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="profile.html">Profile</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <!-- Vertical Navbar -->
+  <nav class="navbar-vertical">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="jobs.html">Jobs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="checkin.html">Check-In/Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="inventory.html">Inventory</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="reports.html">Reports</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="profile.html">Profile</a>
+      </li>
+    </ul>
   </nav>
 
   <!-- Main Content -->
-  <div class="main-content-container">
-    <div class="main-content">
-      <h1>Dashboard</h1>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Assigned Jobs</h5>
-              <p class="card-text">5 jobs assigned today.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Completed Jobs</h5>
-              <p class="card-text">2 jobs completed.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Pending Jobs</h5>
-              <p class="card-text">3 jobs pending.</p>
-            </div>
+  <div class="main-content">
+    <h1>Dashboard</h1>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <button class="btn btn-primary w-100" onclick="createJob()">Create New Job</button>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-success w-100" onclick="checkInventory()">Check Inventory</button>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-warning w-100" onclick="viewReports()">View Reports</button>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-danger w-100" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Jobs Completed</h5>
+            <p class="card-text display-4">12</p>
           </div>
         </div>
       </div>
-
-      <!-- GPS Map -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Technician Locations</h5>
-          <div id="map"></div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Pending Jobs</h5>
+            <p class="card-text display-4">5</p>
+          </div>
         </div>
       </div>
-
-      <!-- Real-Time Notifications -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Notifications</h5>
-          <ul id="notifications" class="list-group">
-            <!-- Notifications will appear here -->
-          </ul>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Technician Performance</h5>
+            <p class="card-text display-4">4.5/5</p>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Job Completion Rate</h5>
+            <canvas id="jobCompletionChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Technician Performance</h5>
+            <canvas id="technicianPerformanceChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Recent Activity</h5>
+        <ul class="list-group">
+          <li class="list-group-item">Job #123 completed by John Doe</li>
+          <li class="list-group-item">Job #124 started by Jane Smith</li>
+          <li class="list-group-item">Inventory item "Drill" checked out by John Doe</li>
+          <li class="list-group-item">Job #125 assigned to Jane Smith</li>
+        </ul>
       </div>
     </div>
   </div>
 
-   <!-- Footer -->
-  <footer class="footer text-center fixed-bottom">
-    <p>Powered by <a href="https://techthuthuka.vercel.app" target="_blank" class="text-decoration-none">Thuthukatech</a></p>
-  </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+  <script>
+    // Charts
+    const jobCompletionChart = new Chart(document.getElementById('jobCompletionChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Completed', 'Pending'],
+        datasets: [{
+          label: 'Jobs',
+          data: [12, 5],
+          backgroundColor: ['#36a2eb', '#ff6384'],
+        }]
+      }
+    });
+
+    const technicianPerformanceChart = new Chart(document.getElementById('technicianPerformanceChart'), {
+      type: 'pie',
+      data: {
+        labels: ['John Doe', 'Jane Smith'],
+        datasets: [{
+          label: 'Performance',
+          data: [8, 12],
+          backgroundColor: ['#ffcd56', '#4bc0c0'],
+        }]
+      }
+    });
+
+    // Quick Actions
+    function createJob() {
+      window.location.href = 'jobs.html';
+    }
+
+    function checkInventory() {
+      window.location.href = 'inventory.html';
+    }
+
+    function viewReports() {
+      window.location.href = 'reports.html';
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    }
+  </script>
 </body>
 </html>
