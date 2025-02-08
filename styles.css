@@ -1,0 +1,115 @@
+/* Custom Styles */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #081b29, #0a2a3a);
+  color: #fff;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar with Vertical Buttons */
+.navbar-vertical {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 200px;
+  background: linear-gradient(to bottom, #00a6ff, #0077ff);
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-vertical .nav-item {
+  margin-bottom: 15px;
+}
+
+.navbar-vertical .nav-link {
+  color: #fff;
+  font-size: 1.1em;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.navbar-vertical .nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 220px; /* Offset for navbar */
+  padding: 20px;
+}
+
+/* Cards */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(to right, #00a6ff, #0077ff);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #0077ff, #00a6ff);
+}
+
+/* Tables */
+.table {
+  color: #fff;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table-striped tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Comments Section */
+.comment-section {
+  margin-top: 20px;
+}
+
+.comment-section textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.comment-section button {
+  background: linear-gradient(to right, #00a6ff, #0077ff);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comment-section button:hover {
+  background: linear-gradient(to right, #0077ff, #00a6ff);
+}
+
+/* Timestamps */
+.timestamp {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 5px;
+}
