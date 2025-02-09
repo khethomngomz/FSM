@@ -4,7 +4,16 @@ const admin = require("firebase-admin");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+
+// CORS Configuration (you can customize this as per your need)
+const corsOptions = {
+  origin: "https://fsmtech.vercel.app/", // Allow only this domain
+  methods: "GET,POST", // Allow only GET and POST requests
+  allowedHeaders: "Content-Type, Authorization", // Only these headers are allowed
+};
+
+// Use CORS middleware with custom options
+app.use(cors(corsOptions)); // You can leave it as app.use(cors()) for allowing all origins
 app.use(express.json());
 
 // Initialize Firebase Admin SDK
