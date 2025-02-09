@@ -1,55 +1,77 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const admin = require("firebase-admin");
-require("dotenv").config();
-
 const app = express();
 
-// CORS Configuration (you can customize this as per your need)
-const corsOptions = {
-  origin: "https://fsmtech.vercel.app/", // Allow only this domain
-  methods: "GET,POST", // Allow only GET and POST requests
-  allowedHeaders: "Content-Type, Authorization", // Only these headers are allowed
+app.use(express.json());
+app.use(cors()); // Allow frontend to communicate with backend
+
+// Hardcoded users for now
+const users = [
+  { id: 1, username: "technician1", password: "password123", role: "technician" },
+  { id: 2, username: "technician2", password: "password123", role: "technician" },
+  { id: 3, username: "technician3", password: "password123", role: "technician" },
+  { id: 4, username: "technician4", password: "password123", role: "technician" },
+  { id: 5, username: "technician5", password: "password123", role: "technician" },
+  { id: 6, username: "technician6", password: "password123", role: "technician" },
+  { id: 7, username: "technician7", password: "password123", role: "technician" },
+  { id: 8, username: "technician8", password: "password123", role: "technician" },
+  { id: 9, username: "technician9", password: "password123", role: "technician" },
+  { id: 10, username: "technician10", password: "password123", role: "technician" },
+];
+
+// Login route
+app.post("/api/login", (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find((u) => u.username === username && u.password === password);
+
+  if (!user) {
+    return res.status(401).json({ message: "Invalid credentials" });
+  }
+
+  const token = jwt.sign(
+    { id: user.id, username: user.username, role: user.role },
+    "your-secret-key",
+    { expiresIn: "24h" }
+  );
+  res.json({ user: { id: user.id, username: user.username, role: user.role }, token });
+});
+
+// Middleware to verify token
+const verifyToken = (req, res, next) => {
+  const token = req.headers["authorization"];
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  jwt.verify(token, "your-secret-key", (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
+    req.user = decoded;
+    next();
+  });
 };
 
-// Use CORS middleware with custom options
-app.use(cors(corsOptions)); // You can leave it as app.use(cors()) for allowing all origins
-app.use(express.json());
+// Inventory storage
+let inventory = [];
 
-// Initialize Firebase Admin SDK
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
-const db = admin.firestore();
-
-// Example Route - Get All Users
-app.get("/users", async (req, res) => {
-  try {
-    const snapshot = await db.collection("users").get();
-    let users = [];
-    snapshot.forEach((doc) => users.push({ id: doc.id, ...doc.data() }));
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+// Add inventory item
+app.post("/api/inventory", verifyToken, (req, res) => {
+  const { itemName, checkInTime, checkOutTime } = req.body;
+  if (!itemName || !checkInTime) {
+    return res.status(400).json({ message: "Missing required fields" });
   }
+  const newItem = {
+    id: inventory.length + 1,
+    itemName,
+    checkInTime,
+    checkOutTime: checkOutTime || null,
+  };
+  inventory.push(newItem);
+  res.json({ message: "Item added", item: newItem });
 });
 
-// Example Route - Add New User
-app.post("/users", async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    if (!name || !email) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-    const userRef = await db.collection("users").add({ name, email });
-    res.status(201).json({ id: userRef.id, name, email });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to add user", details: error.message });
-  }
+// Get inventory items
+app.get("/api/inventory", verifyToken, (req, res) => {
+  res.json(inventory);
 });
 
-// Start Server Locally
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
