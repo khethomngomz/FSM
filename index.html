@@ -3,168 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - FSMApp</title>
-  <link rel="stylesheet" href="bootstrap.min.css">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Technician Dashboard</title>
+
+  <!-- Include Bootstrap 5 for styling -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJv9nS3L34x7t6ZtIHhGbFd0ZWEzPQbPz0e/6nAAh2Z7e8C1jvpcG67wfsIm" crossorigin="anonymous">
+
+  <style>
+    /* Custom styles for dashboard */
+    .card-deck {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    .card {
+      flex: 0 0 23%;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+
+  <!-- Navbar (Optional) -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">FSM</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <a class="navbar-brand" href="#">Technician Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav  me-auto">
-          <li class="nav-item"><a class="nav-link" href="jobs.html">Jobs</a></li>
-          <li class="nav-item"><a class="nav-link" href="checkin.html">Check-In/Out</a></li>
-          <li class="nav-item"><a class="nav-link" href="inventory.html">Inventory</a></li>
-          <li class="nav-item"><a class="nav-link" href="reports.html">Reports</a></li>
-          <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile.html">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="jobs.html">Jobs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="logout()">Logout</a>
+          </li>
         </ul>
-                <button class="btn btn-danger" onclick="logout()">Logout</button>
-
       </div>
     </div>
   </nav>
 
-  <!-- Main Content -->
-           <div class="container mt-5 pt-5">
-
-    <h1>Dashboard</h1>
-
-    <!-- Quick Actions -->
-    <div class="row mb-4">
-      <div class="col-md-3">
-        <button class="btn btn-primary w-100" onclick="createJob()">Create New Job</button>
-      </div>
-      <div class="col-md-3">
-        <button class="btn btn-primary w-100" onclick="checkInventory()">Check Inventory</button>
-      </div>
-      <div class="col-md-3">
-        <button class="btn btn-primary w-100" onclick="viewReports()">View Reports</button>
-      </div>
-    </div>
-
-    <!-- Key Metrics -->
-    <div class="row mb-4">
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Jobs Completed</h5>
-            <p class="card-text display-4">12</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Pending Jobs</h5>
-            <p class="card-text display-4">5</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Technician Performance</h5>
-            <p class="card-text display-4">4.5/5</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Charts -->
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Job Completion Rate</h5>
-            <canvas id="jobCompletionChart"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Technician Performance</h5>
-            <canvas id="technicianPerformanceChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Recent Activity -->
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Recent Activity</h5>
-        <ul class="list-group">
-          <li class="list-group-item">Job #123 completed by Installation Team</li>
-          <li class="list-group-item">Job #124 started by Installation Team</li>
-          <li class="list-group-item">Inventory item "Drill" checked out by Uninstall Team</li>
-          <li class="list-group-item">Job #125 assigned to Uninstall Team</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-<footer class="footer text-center fixed-bottom bg-dark text-white py-3">
   <div class="container">
-    <p class="mb-0">
-      <strong>Simanosaziwayo Projects</strong> powered by 
-      <a href="https://techthuthuka.vercel.app" target="_blank" class="text-decoration-none text-info">Thuthukatech</a> 
-      | Innovating the Future 
-    </p>
+    <h3 class="mt-4">Dashboard</h3>
+
+    <!-- Dashboard Stats -->
+    <div class="card-deck">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Jobs Completed</h5>
+          <p class="card-text display-4" id="jobsCompleted">Loading...</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Pending Jobs</h5>
+          <p class="card-text display-4" id="pendingJobs">Loading...</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Technicians Online</h5>
+          <p class="card-text display-4" id="techsOnline">Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Job Completion Chart -->
+    <div class="mt-4">
+      <h5>Job Completion Chart</h5>
+      <canvas id="jobCompletionChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Technician Performance Chart -->
+    <div class="mt-4">
+      <h5>Technician Performance</h5>
+      <canvas id="technicianPerformanceChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Real-Time Notifications -->
+    <div class="mt-4">
+      <h5>Notifications</h5>
+      <ul id="notifications" class="list-group">
+        <!-- Notifications will appear here -->
+      </ul>
+    </div>
   </div>
-</footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Include Custom Script -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.0.0/dist/socket.io.min.js"></script>
   <script>
-    // Charts
-    const jobCompletionChart = new Chart(document.getElementById('jobCompletionChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Completed', 'Pending'],
-        datasets: [{
-          label: 'Jobs',
-          data: [12, 5],
-          backgroundColor: ['#36a2eb', '#ff6384'],
-        }]
+    document.addEventListener("DOMContentLoaded", async function () {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        window.location.href = "login.html";
+        return;
       }
-    });
 
-    const technicianPerformanceChart = new Chart(document.getElementById('technicianPerformanceChart'), {
-      type: 'pie',
-      data: {
-        labels: ['Installation Team', 'Uninstall Team'],
-        datasets: [{
-          label: 'Performance',
-          data: [8, 12],
-          backgroundColor: ['#ffcd56', '#4bc0c0'],
-        }]
+      try {
+        const response = await fetch('https://your-backend-url.onrender.com/api/dashboard', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // Update dashboard with fetched data
+          document.getElementById('jobsCompleted').textContent = data.jobsCompleted;
+          document.getElementById('pendingJobs').textContent = data.pendingJobs;
+          document.getElementById('techsOnline').textContent = data.techsOnline;
+
+          // Initialize the job completion chart
+          const jobCompletionChart = new Chart(document.getElementById("jobCompletionChart"), {
+            type: "bar",
+            data: {
+              labels: ["Completed", "Pending"],
+              datasets: [{
+                label: "Jobs",
+                data: [data.jobsCompleted, data.pendingJobs],
+                backgroundColor: ["#36a2eb", "#ff6384"],
+              }],
+            },
+          });
+
+          // Initialize technician performance chart
+          const technicianPerformanceChart = new Chart(document.getElementById("technicianPerformanceChart"), {
+            type: "pie",
+            data: {
+              labels: data.technicianNames,
+              datasets: [{
+                label: "Performance",
+                data: data.technicianPerformance,
+                backgroundColor: ["#ffcd56", "#4bc0c0"],
+              }],
+            },
+          });
+
+        } else {
+          const error = await response.json();
+          alert(error.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
       }
+
+      // Real-time Notifications with Socket.IO
+      const socket = io();
+      const notificationsList = document.getElementById("notifications");
+
+      socket.on("notification", (message) => {
+        const notificationItem = document.createElement("li");
+        notificationItem.className = "list-group-item";
+        notificationItem.textContent = message;
+        notificationsList.appendChild(notificationItem);
+      });
+
+      // Example: Send a notification
+      socket.emit("notification", "Technician John Doe has started a job.");
     });
-
-    // Quick Actions
-    function createJob() {
-      window.location.href = 'jobs.html';
-    }
-
-    function checkInventory() {
-      window.location.href = 'inventory.html';
-    }
-
-    function viewReports() {
-      window.location.href = 'reports.html';
-    }
 
     function logout() {
       localStorage.removeItem('token');
       window.location.href = 'login.html';
     }
   </script>
+
+  <!-- Include Bootstrap 5 JS (Optional, for Modal/Dropdown functionality) -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>

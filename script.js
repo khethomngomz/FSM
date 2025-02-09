@@ -1,16 +1,38 @@
+// Initialize socket.io for real-time notifications
+const socket = io();
+
+// Listen for incoming notifications
+const notificationsList = document.getElementById("notifications");
+
+socket.on("notification", (message) => {
+  const notificationItem = document.createElement("li");
+  notificationItem.className = "list-group-item";
+  notificationItem.textContent = message;
+  notificationsList.appendChild(notificationItem);
+});
+
+// Send Notification Function
+function sendNotification(message) {
+  socket.emit("notification", message);
+}
+
 // Function to update job status
 function updateStatus(jobId, status) {
-  alert(`Job ${jobId} status updated to: ${status}`);
+  sendNotification(`Job ${jobId} status updated to: ${status}`);
 }
 
 // Function for check-in
 function checkIn() {
-  alert("Checked in at: " + new Date().toLocaleTimeString());
+  const checkInTime = new Date().toLocaleTimeString();
+  alert("Checked in at: " + checkInTime);
+  sendNotification(`Checked in at: ${checkInTime}`);
 }
 
 // Function for check-out
 function checkOut() {
-  alert("Checked out at: " + new Date().toLocaleTimeString());
+  const checkOutTime = new Date().toLocaleTimeString();
+  alert("Checked out at: " + checkOutTime);
+  sendNotification(`Checked out at: ${checkOutTime}`);
 }
 
 // Charts for Reporting Dashboard
@@ -67,55 +89,32 @@ function initMap() {
   });
 }
 
-// Real-Time Notifications with Socket.IO
-const socket = io();
-const notificationsList = document.getElementById("notifications");
-
-socket.on("notification", (message) => {
-  const notificationItem = document.createElement("li");
-  notificationItem.className = "list-group-item";
-  notificationItem.textContent = message;
-  notificationsList.appendChild(notificationItem);
-});
-
-// Example: Send a notification
-socket.emit("notification", "Technician John Doe has started a job.");
-
-// Connect to the Socket.IO server
-
-// Send a notification
-function sendNotification(message) {
-  socket.emit("notification", message);
-}
-
-// Receive notifications
-socket.on("notification", (message) => {
-  const notificationsList = document.getElementById("notifications");
-  const notificationItem = document.createElement("li");
-  notificationItem.className = "list-group-item";
-  notificationItem.textContent = message;
-  notificationsList.appendChild(notificationItem);
-});
-
-// Example: Send a notification when a job starts
-function updateStatus(jobId, status) {
-  sendNotification(`Job ${jobId} status updated to: ${status}`);
-}
-
 // Job Timestamps
 let startTime = null;
 let finishTime = null;
 
 function startJob() {
-  startTime = new Date().toLocaleTimeString();
-  document.getElementById("startTime").textContent = startTime;
-  sendNotification(`Job started at ${startTime}`);
+  const now = new Date();
+  const hours = formatTimeUnit(now.getHours());
+  const minutes = formatTimeUnit(now.getMinutes());
+  const seconds = formatTimeUnit(now.getSeconds());
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+  document.getElementById("startTime").textContent = formattedTime;
+
+  // Send a notification for job start
+  sendNotification(`Job started at ${formattedTime}`);
 }
 
 function finishJob() {
-  finishTime = new Date().toLocaleTimeString();
-  document.getElementById("finishTime").textContent = finishTime;
-  sendNotification(`Job finished at ${finishTime}`);
+  const now = new Date();
+  const hours = formatTimeUnit(now.getHours());
+  const minutes = formatTimeUnit(now.getMinutes());
+  const seconds = formatTimeUnit(now.getSeconds());
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+  document.getElementById("finishTime").textContent = formattedTime;
+
+  // Send a notification for job finish
+  sendNotification(`Job finished at ${formattedTime}`);
 }
 
 // Submit Comments
@@ -126,18 +125,6 @@ function submitComment(stage) {
     document.getElementById(`${stage}Comment`).value = ""; // Clear the textarea
   }
 }
-
-function sendNotification(message) {
-  socket.emit("notification", message);
-}
-
-socket.on("notification", (message) => {
-  const notificationsList = document.getElementById("notifications");
-  const notificationItem = document.createElement("li");
-  notificationItem.className = "list-group-item";
-  notificationItem.textContent = message;
-  notificationsList.appendChild(notificationItem);
-});
 
 // Edit Personal Details
 function editPersonalDetails() {
@@ -157,10 +144,22 @@ document.getElementById("personalDetailsForm").addEventListener("submit", functi
   const phoneInput = document.getElementById("phone");
   const saveButton = document.querySelector("#personalDetailsForm .btn-success");
 
-  emailInput.disabled = true;
-  phoneInput.disabled = true;
-  saveButton.style.display = "none";
-  alert("Personal details saved!");
+  // Show loading spinner
+  saveButton.innerHTML = "Saving... <i class='spinner-border spinner-border-sm'></i>";
+
+  // Simulate a delay for saving process
+  setTimeout(() => {
+    emailInput.disabled = true;
+    phoneInput.disabled = true;
+    saveButton.style.display = "none";
+    saveButton.innerHTML = "Saved!";
+    alert("Personal details saved!");
+
+    // Remove spinner after a short delay
+    setTimeout(() => {
+      saveButton.innerHTML = "Save"; // Reset button text
+    }, 1000);
+  }, 1500); // Simulating a delay of 1.5 seconds
 });
 
 // Delete Personal Details
@@ -227,31 +226,43 @@ document.getElementById("imageUploadForm").addEventListener("submit", function (
 const inventoryList = document.getElementById("inventoryList");
 
 // Add Inventory Item
+// Handle adding inventory item
 document.getElementById("addInventoryForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+  e.preventDefault(); // Prevent the default form submission
 
+  // Get values from the form inputs
   const itemName = document.getElementById("itemName").value;
   const itemImage = document.getElementById("itemImage").files[0];
+  const checkInTime = document.getElementById("checkInTime").value;
+  const checkOutTime = document.getElementById("checkOutTime").value;
 
-  if (itemName && itemImage) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const item = `
-        <tr>
-          <td>${itemName}</td>
-          <td><img src="${e.target.result}" alt="${itemName}" width="50"></td>
-          <td><button class="btn btn-sm btn-danger" onclick="deleteInventoryItem(this)">Delete</button></td>
-        </tr>
-      `;
-      inventoryList.insertAdjacentHTML("beforeend", item);
-    };
-    reader.readAsDataURL(itemImage);
-
-    // Clear the form
-    document.getElementById("addInventoryForm").reset();
-  } else {
-    alert("Please fill out all fields.");
+  // Validate input fields
+  if (!itemName || !itemImage || !checkInTime) {
+    alert("Please fill out all fields before submitting.");
+    return;
   }
+
+  // Create a new row for the inventory table
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const itemRow = `
+      <tr>
+        <td>${itemName}</td>
+        <td><img src="${e.target.result}" alt="${itemName}" width="50"></td>
+        <td>${checkInTime}</td>
+        <td>${checkOutTime ? checkOutTime : "N/A"}</td>
+        <td>
+          <button class="btn btn-sm btn-danger" onclick="deleteInventoryItem(this)">Delete</button>
+        </td>
+      </tr>
+    `;
+    // Add the new row to the inventory table
+    document.getElementById("inventoryList").insertAdjacentHTML("beforeend", itemRow);
+
+    // Clear the form inputs after adding the item
+    document.getElementById("addInventoryForm").reset();
+  };
+  reader.readAsDataURL(itemImage);
 });
 
 // Delete Inventory Item
