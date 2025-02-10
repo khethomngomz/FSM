@@ -50,8 +50,16 @@
         localStorage.setItem("token", "mock-token");
         localStorage.setItem("user", JSON.stringify(user));
 
+        // Store user ID in localStorage
+localStorage.setItem("userId", user.id); // Store with userId to match Firestore
+console.log('User ID stored in localStorage:', user.id);
+
+        // Debugging: Verify that the user ID is stored in localStorage
+        const storedUserId = localStorage.getItem('user_id');
+        console.log('Stored User ID:', storedUserId); // This should output the correct user ID
+
         // Redirect to dashboard
-        window.location.href = "index.html";
+        window.location.href = "checkin.html"; // Changed from index.html to checkin.html
       } else {
         alert("Invalid credentials.");
       }

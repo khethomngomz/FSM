@@ -1,4 +1,4 @@
-// mockUsers.js
+// mockUser.js
 const mockUsers = [
   { id: 1, username: "Tshiamo", password: "admin1", email: "user1@example.com" },
   { id: 2, username: "Khetho", password: "admin2", email: "user2@example.com" },
@@ -12,4 +12,10 @@ const mockUsers = [
   { id: 10, username: "user10", password: "pass10", email: "user10@example.com" },
 ];
 
-export default mockUsers;
+// Pick the first user or any specific one you want to set as default
+const selectedUser = mockUsers[0]; // Use mock user with index 0 (Tshiamo)
+
+// Set selected user in localStorage
+localStorage.setItem("user_id", selectedUser.id);
+localStorage.setItem("user_name", selectedUser.username);
+localStorage.setItem("user_email", selectedUser.email);
